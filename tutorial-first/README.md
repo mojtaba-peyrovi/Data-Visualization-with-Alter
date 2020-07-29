@@ -27,3 +27,30 @@ alt.Chart(cars).mark_bar().encode(
 )
 ````
 
+We can create a selection rectangle on the visual, so that it selects anything we want and the outside area will be gray.
+```python
+interval = alt.selection_interval(encodings=['x','y'])
+chart = alt.Chart(cars).mark_point().encode(
+    x = "Miles_per_Gallon",
+    y = "Horsepower",
+    color = alt.condition(interval, 'Origin', alt.value('lightgray'))
+).properties(selection = interval)
+```
+
+also, by adding this line:
+
+> chart | chart.encode(x = 'Acceleration')
+
+we can make two charts next to each other while X axis is different.
+
+
+We can make the selection along only one axis. code is below:
+
+```python
+interval = alt.selection_interval(encodings=['x'])
+chart = alt.Chart(cars).mark_point().encode(
+    x = "Miles_per_Gallon",
+    y = "Horsepower",
+    color = alt.condition(interval, 'Origin', alt.value('lightgray'))
+).properties(selection = interval)
+```
